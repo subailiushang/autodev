@@ -1,0 +1,399 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table id="table" class="table table-striped table-bordered table-hover">
+                                <thead>
+                                <tr role="row">
+                                    <th>编号</th>
+                                    <th>项目名称</th>
+                                    <th>阶段</th>
+                                    <th>城市</th>
+                                    <th>运维</th>
+                                    <th>开发</th>
+                                    <th>销售</th>
+                                    <th>项目经理</th>
+                                    <th>业务</th>
+                                    <th>代理商</th>
+                                    <th>实施方</th>
+                                    <th>项目状态</th>
+                                    <th>项目进展</th>
+                                    <th>项目开始时间</th>
+                                    <th>项目上线时间</th>
+                                    <th>项目验收时间</th>
+                                    <th>项目授权时长</th>
+                                    <th>项目授权到期时间</th>
+                                    <th>维保到期时间</th>
+                                    <th>支持方式</th>
+                                    <th>操作</th>
+                                    <th>详细</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for project in projects %}
+                                    <tr class="gradeA odd" role="row">
+                                        <td>{{ project.pk }}</td>
+                                        <td>{{ project.pname }}</td>
+                                        <td>{{ project.pstage }}</td>
+                                        <td>{{ project.pcity }}</td>
+                                        <td>{{ project.poperator }}</td>
+                                        <td>{{ project.pdeveloper }}</td>
+                                        <td>{{ project.psales }}</td>
+                                        <td>{{ project.pmanager }}</td>
+                                        <td>{{ project.pbusiness }}</td>
+                                        <td>{{ project.pagent }}</td>
+                                        <td>{{ project.pimplementer }}</td>
+                                        <td>{{ project.pstatus }}</td>
+                                        <td>{{ project.pprogress }}</td>
+                                        <td>{{ project.pstart_time|date:'Y-m-d' }}</td>
+                                        <td>{{ project.ponline_time|date:'Y-m-d' }}</td>
+                                        <td>{{ project.pacceptance_time|date:'Y-m-d' }}</td>
+                                        <td>{{ project.plicense_time }}</td>
+                                        <td>{{ project.plicexpire_time|date:'Y-m-d' }}</td>
+                                        <td>{{ project.pexpire_time|date:'Y-m-d' }}</td>
+                                        <td>{{ project.psup_type }}</td>
+                                        <td style="cursor:pointer;" onclick="mymodal(this)">
+                                            <span class="label label-danger">
+                                                    修改
+                                            </span>
+                                        </td>
+                                        <td style="cursor:pointer;" onclick="">
+                                            <span class="label label-primary">
+                                                    详细
+                                            </span>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <th rowspan="1" colspan="1">编号</th>
+                                    <th rowspan="1" colspan="1">项目名称</th>
+                                    <th rowspan="1" colspan="1">阶段</th>
+                                    <th rowspan="1" colspan="1">城市</th>
+                                    <th rowspan="1" colspan="1">运维</th>
+                                    <th rowspan="1" colspan="1">开发</th>
+                                    <th rowspan="1" colspan="1">销售</th>
+                                    <th rowspan="1" colspan="1">项目经理</th>
+                                    <th rowspan="1" colspan="1">业务</th>
+                                    <th rowspan="1" colspan="1">代理商</th>
+                                    <th rowspan="1" colspan="1">实施方</th>
+                                    <th rowspan="1" colspan="1">项目状态</th>
+                                    <th rowspan="1" colspan="1">项目进展</th>
+                                    <th rowspan="1" colspan="1">项目开始时间</th>
+                                    <th rowspan="1" colspan="1">项目上线时间</th>
+                                    <th rowspan="1" colspan="1">项目验收时间</th>
+                                    <th rowspan="1" colspan="1">项目授权时长</th>
+                                    <th rowspan="1" colspan="1">项目授权到期时间</th>
+                                    <th rowspan="1" colspan="1">维保到期时间</th>
+                                    <th rowspan="1" colspan="1">支持方式</th>
+                                    <th rowspan="1" colspan="1">操作</th>
+                                    <th rowspan="1" colspan="1">详细</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade bs-example-modal-lg" id="myModal" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true" style="color: red">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel"><strong>修改工单信息</strong></h3>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'projects' %}" method="post">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pid">编号</label>
+                                    <input type="text" class="form-control" id="pid" name="pid" readonly>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pname">项目名称</label>
+                                    <input type="text" class="form-control" id="pname" name="pname" readonly="readonly">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pstage">项目阶段</label>
+                                    <input type="text" class="form-control" id="pstage" name="pstage">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pcity">城市</label>
+                                    <input type="text" class="form-control" id="pcity" name="pcity">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="poperator">运维</label>
+                                    <input type="text" class="form-control" id="poperator" name="poperator">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pdeveloper">开发</label>
+                                    <input type="text" class="form-control" id="pdeveloper" name="pdeveloper">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="psales">销售</label>
+                                    <input type="text" class="form-control" id="psales" name="psales">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pmanager">项目经理</label>
+                                    <input type="text" class="form-control" id="pmanager" name="pmanager">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pbusiness">业务</label>
+                                    <input type="text" class="form-control" id="pbusiness" name="pbusiness">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pagent">代理商</label>
+                                    <input type="text" class="form-control" id="pagent" name="pagent">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pimplementer">实施方</label>
+                                    <input type="text" class="form-control" id="pimplementer" name="pimplementer">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pstatus">项目状态</label>
+                                    <input type="text" class="form-control" id="pstatus" name="pstatus">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pstart_time">开始时间</label>
+                                    <input type="text" class="form-control" id="pstart_time" name="pstart_time">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="ponline_time">上线时间</label>
+                                    <input type="text" class="form-control" id="ponline_time" name="ponline_time">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pacceptance_time">验收时间</label>
+                                    <input type="text" class="form-control" id="pacceptance_time"
+                                           name="pacceptance_time">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="plicense_time">授权时长</label>
+                                    <input type="text" class="form-control" id="plicense_time" name="plicense_time">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="plicexpire_time">授权到期日</label>
+                                    <input type="text" class="form-control" id="plicexpire_time" name="plicexpire_time">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="pexpire_time">维保到期日</label>
+                                    <input type="text" class="form-control" id="pexpire_time" name="pexpire_time">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="finish_time">远程或外出支持</label>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="psup_type" id="remote" value="远程支持" checked>
+                                            远程支持
+                                        </label>
+                                    </div>
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="psup_type" id="local" value="客户现场支持">
+                                            客户现场支持
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="pprogress">项目进展</label>
+                            <textarea class="form-control" rows="5" id="pprogress" name="pprogress"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn" data-dismiss="modal">取消</button>
+                        {% csrf_token %}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+
+{% block script %}
+    <script>
+        $(document).ready(function () {
+            let table = $('#table').DataTable({
+                'pageLength': 25,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    {extend: 'excel', title: '项目详情'},
+                ],
+                'language': {
+                    "sProcessing": "处理中...",
+                    "sLengthMenu": "显示 _MENU_ 项结果",
+                    "sZeroRecords": "没有匹配结果",
+                    "sInfo": "显示第 _START_ 至 _END_ 项结果，共 _TOTAL_ 项",
+                    "sInfoEmpty": "显示第 0 至 0 项结果，共 0 项",
+                    "sInfoFiltered": "(由 _MAX_ 项结果过滤)",
+                    "sInfoPostFix": "",
+                    "sSearch": "搜索:",
+                    "sUrl": "",
+                    "sEmptyTable": "表中数据为空",
+                    "sLoadingRecords": "载入中...",
+                    "sInfoThousands": ",",
+                    "oPaginate": {
+                        "sFirst": "首页",
+                        "sPrevious": "上页",
+                        "sNext": "下页",
+                        "sLast": "末页"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": 以升序排列此列",
+                        "sSortDescending": ": 以降序排列此列"
+                    }
+                },
+                initComplete: function () {
+                    let api = this.api();
+                    api.columns().indexes().flatten().each(function (i) {
+                        let column = api.column(i);
+                        let select = $('<select><option value=""></option></select>')
+                            .appendTo($(column.footer()).empty())
+                            .on('change', function () {
+                                let val = $.fn.dataTable.util.escapeRegex(
+                                    $(this).val()
+                                );
+                                column
+                                    .search(val ? '^' + val + '$' : '', true, false)
+                                    .draw();
+                            });
+                        column.data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    });
+                },
+            });
+        });
+        let mymodal = function (obj) {
+            // 查找当前按钮td元素的直接父类tbody下的所有td元素
+            let tbd = $(obj).parent().find('td');
+            let pid = tbd.eq(0).text();
+            let pname = tbd.eq(1).text();
+            let pstage = tbd.eq(2).text();
+            let pcity = tbd.eq(3).text();
+            let poperator = tbd.eq(4).text();
+            let pdeveloper = tbd.eq(5).text();
+            let psales = tbd.eq(6).text();
+            let pmanager = tbd.eq(7).text();
+            let pbusiness = tbd.eq(8).text();
+            let pagent = tbd.eq(9).text();
+            let pimplementer = tbd.eq(10).text();
+            let pstatus = tbd.eq(11).text();
+            let pprogress = tbd.eq(12).text();
+            let pstart_time = tbd.eq(13).text();
+            let ponline_time = tbd.eq(14).text();
+            let pacceptance_time = tbd.eq(15).text();
+            let plicense_time = tbd.eq(16).text();
+            let plicexpire_time = tbd.eq(17).text();
+            let pexpire_time = tbd.eq(18).text();
+            let psup_type = tbd.eq(19).text();
+
+            $("#pid").val(pid);
+            $("#pname").val(pname);
+            $("#pstage").val(pstage);
+            $("#pcity").val(pcity);
+            $("#poperator").val(poperator);
+            $("#pdeveloper").val(pdeveloper);
+            $("#psales").val(psales);
+            $("#pmanager").val(pmanager);
+            $("#pbusiness").val(pbusiness);
+            $("#pagent").val(pagent);
+            $("#pimplementer").val(pimplementer);
+            $("#pstatus").val(pstatus);
+            $("#pprogress").val(pprogress);
+            $("#pstart_time").val(pstart_time);
+            $("#ponline_time").val(ponline_time);
+            $("#pacceptance_time").val(pacceptance_time);
+            $("#plicexpire_time").val(plicexpire_time);
+            $("#pexpire_time").val(pexpire_time);
+            $("#plicense_time").val(plicense_time);
+            if (psup_type === "远程支持") {
+                document.getElementById('remote').checked = true;
+            } else {
+                document.getElementById('local').checked = true;
+            }
+            $('#myModal').modal('show');
+        }
+    </script>
+    <script>
+        let setcalendar = function (arg) {
+            $(arg).datetimepicker({
+                format: 'yyyy-mm-dd',  //显示格式可为yyyymm/yyyy-mm-dd/yyyy.mm.dd
+                weekStart: 1,  	//0-周日,6-周六 。默认为0
+                autoclose: true,
+                startView: 2,  	//打开时显示的视图。0-'hour' 1-'day' 2-'month' 3-'year' 4-'decade'
+                minView: 3,  	//最小时间视图。默认0-'hour'
+                initialDate: new Date(),	//初始化日期.默认new Date()当前日期
+                forceParse: false,  	//当输入非格式化日期时，强制格式化。默认true
+                bootcssVer: 3,	//显示向左向右的箭头
+                language: 'zh-CN' //语言
+            });
+        };
+        let pickarry = ["#pstart_time", "#ponline_time", "#pacceptance_time", "#plicexpire_time", "#pexpire_time"];
+        for (let i = 0; i <= pickarry.length; i++) {
+            setcalendar(pickarry[i]);
+        }
+    </script>
+{% endblock %}
